@@ -131,12 +131,9 @@ public class Question extends DateEntity {
     }
 
     public boolean isAllAnswerOwner(User loginUser) {
-        for (Answer answer : answers) {
-            if (!answer.isOwner(loginUser)) {
-                return false;
-            }
-        }
-        return true;
+        return answers.size() == answers.stream()
+            .filter(answer -> answer.isOwner(loginUser))
+            .count();
     }
 
     private void deleteAnswers() {
